@@ -14,18 +14,20 @@ dsurv<-read.csv("./data/survivaltimes.csv")
 
 #' Fit the iBAG framework on the data
 #'
-#' @param gene_expr an N (individuals) by k (genes) matrix/dataframe of mrna expression (numerical values)
-#' @param cnv an N (individuals) by k (genes) matrix/dataframe of cnv data
-#' @param meth
-#' @param out
-#' @param iBAGtype
-#' @param fast
-#' @param verbose
+#' @param gene_expr an N (individuals) by k (genes) matrix/dataframe of mrna expression (numeric)
+#' @param cnv an N (individuals) by k (genes) matrix/dataframe of cnv data (numeric)
+#' @param meth an N (individuals) by k (genes) matrix/dataframe of methylation data (numeric)
+#' @param out a N length vector of outcomes or Nx2 matrix/dataframe of patient id (string) & outcome (numeric)
+#' @param iBAGtype c("linear","discrete","survival")
+#' @param fast boolean, if True use the EMVS approach, otherwise run full MCMC
+#' @param verbose boolean, if True print and return debugging information
 #' @return obj An object containing the results.
 #'   obj$mech:
 #'   obj$clinical:
 #' @examples
 #' sim()
+#'
+#' @export
 iBAG <- function(gene_expr,cnv,meth,out,iBAGtype="linear",fast=T,verbose=F){
   GBM_data <- mechmodel(meth = meth, mrna=gene_expr, cnv=cnv, dsurv=out)
   to_gibbs <- prep_and_get_dims(X=GBM_data$X,clinical_response = GBM_data$OurSurvival,  take_log=TRUE, GBM=TRUE)
@@ -48,7 +50,60 @@ iBAG <- function(gene_expr,cnv,meth,out,iBAGtype="linear",fast=T,verbose=F){
   result
 }
 
+#' Process user data.
+#' Check data constraints (Throw Warnings/Stop if not met):
+#'  1. Null checks
+#'  2. N matches for all data submitted by user (meth, cnv, expr, outcome)
+#'  3. Genes match across all platforms (meth, cnv, expr)
+#'  4. Genes/Individual ratio <= 5. User cannot supply too many genes.
+#' return a standardized set of variables to apply the iBAG procedure on
+#'
+#' @param meth an N (individuals) by k (genes) matrix/dataframe of methylation data (numerical values)
+#' @param cnv an N (individuals) by k (genes) matrix/dataframe of cnv data
+#' @param expr an N (individuals) by k (genes) matrix/dataframe of mrna expression (numerical values)
+#' @param out a N length vector of outcomes or Nx2 matrix/dataframe of patient id (string) & outcome (numeric)
+#' @param verbose boolean, if True print and return debugging information
+#' @return obj An object containing the results.
+#'   obj$meth:
+#'   obj$cnv:
+#'   obj$expr:
+#'   obj$outcome:
+#'   obj$gene_names:
+#'   obj$patient_names:
+#'   obj$N: The number of individuals
+#'   obj$K: The number of genes
+#'   obj$
+#' @examples
+#' ()
+#'
+proc_user_data <- function(meth, cnv, expr, out, verbose = F){
+  result <- list("meth"=NULL,"cnv"=NULL,"expr"=NULL,"outcome"=NULL,"gene_names"=NULL,"patient_names"=NULL,"N"=NULL,"K"=NULL)
 
+  result
+}
+
+
+#' Mechanistic Model
+#'
+#' Fit the iBAG mechanistic model on the data
+#' @param meth an N (individuals) by k (genes) matrix/dataframe of methylation data (numerical values)
+#' @param mrna an N (individuals) by k (genes) matrix/dataframe of mrna expression (numerical values)
+#' @param cnv an N (individuals) by k (genes) matrix/dataframe of cnv data
+#' @param verbose boolean, if True print and return debugging information
+#'
+#' @return obj An object containing the results.
+#'   obj$:
+#'   obj$:
+#'
+#' @examples
+#' sim()
+#'
+#'
+mech_model <- function(meth,mrna,cnv,verbose=F){
+  result <- list("meth"=NULL,"cnv"=NULL,"expr"=NULL,"outcome"=NULL,"gene_names"=NULL,"patient_names"=NULL,"N"=NULL,"K"=NULL)
+
+  result
+}
 
 
 # 1st layer model, & data preparation
