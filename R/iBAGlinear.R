@@ -50,7 +50,8 @@ iBAG <- function(gene_expr,cnv,meth,out,iBAGtype="linear",fast=T,verbose=F){
   result
 }
 
-#' Process user data.
+#' Process user data
+#'
 #' Check data constraints (Throw Warnings/Stop if not met):
 #'  1. Null checks
 #'  2. N matches for all data submitted by user (meth, cnv, expr, outcome)
@@ -78,7 +79,11 @@ iBAG <- function(gene_expr,cnv,meth,out,iBAGtype="linear",fast=T,verbose=F){
 #'
 proc_user_data <- function(meth, cnv, expr, out, verbose = F){
   result <- list("meth"=NULL,"cnv"=NULL,"expr"=NULL,"outcome"=NULL,"gene_names"=NULL,"patient_names"=NULL,"N"=NULL,"K"=NULL)
-
+  # Data constraints
+  # 1.1 throw error if expr == NULL
+  if(is.null(expr)){
+    stop("Missing gene expression data")
+  }
   result
 }
 
