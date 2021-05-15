@@ -1,11 +1,5 @@
 # linear iBAG
 
-library(mgcv)
-library(glmnet)
-library(MASS)
-library(MCMCpack)
-library(HyperbolicDist)
-
 meth<-read.csv("./data/methylationdata.csv")
 mrna<-read.csv("./data/mrnadata.csv")
 cnv<-read.csv("./data/copynumberdata.csv")
@@ -16,18 +10,20 @@ dsurv<-read.csv("./data/survivaltimes.csv")
 #'
 #' @param gene_expr an N (individuals) by k (genes) matrix/dataframe of mrna expression (numerical values)
 #' @param cnv an N (individuals) by k (genes) matrix/dataframe of cnv data
-#' @param meth
-#' @param out
+#' @param meth an N (individuals) by k (genes) matrix/dataframe of methylation data
+#' @param outcome an N (individuals) by 1 vector/matrix of patient outcomes
 #' @param iBAGtype
-#' @param fast
+#' @param fast (default: TRUE) If TRUE use expectation maximization to compute posterior beta means, if FALSE use full MCMC to compute posterior distribution for betas
+#' @param take_log (default: FALSE) If true, log transform the outcome vector
+#'
 #' @param verbose
 #' @return obj An object containing the results.
 #'   obj$mech:
 #'   obj$clinical:
 #' @examples
-#' sim()
-iBAG <- function(gene_expr,cnv,meth,out,iBAGtype="linear",fast=T,verbose=F){
-  GBM_data <- mechmodel(meth = meth, mrna=gene_expr, cnv=cnv, dsurv=out)
+#'
+iBAG <- function(gene_expr,cnv,meth,outcome,iBAGtype="linear",fast=T,take_log=F,verbose=F){
+  GBM_data <- mechmodel(meth = meth, mrna=gene_expr, cnv=cnv, dsurv=outcome)
   to_gibbs <- prep_and_get_dims(X=GBM_data$X,clinical_response = GBM_data$OurSurvival,  take_log=TRUE, GBM=TRUE)
 
   result <- list("post_means"=NULL,"prob_inclusion"=NULL)
@@ -38,6 +34,7 @@ iBAG <- function(gene_expr,cnv,meth,out,iBAGtype="linear",fast=T,verbose=F){
     result$prob_inclusion <- res$prob_inclusion
   } else {
     nruns = 100*length(out)
+    burn_in <- floor(0.05*nruns)+1
     initial <- get_starting_values_NG(S=nruns, p=to_gibbs$p, k=to_gibbs$k, n=to_gibbs$n, X=to_gibbs$X, Y=to_gibbs$Y,names_to_keep = to_gibbs$names_to_keep)
     M <- mean(coef(lm(to_gibbs$Y~to_gibbs$X - 1))^2)
     final <- MC_samples_NG_no_sig_sq_in_beta_prior(PARAM=initial$PARAM, X=to_gibbs$X, Y=to_gibbs$Y, p=to_gibbs$p, k=to_gibbs$k, n=to_gibbs$n,a=0.001, b=0.001, c=1, a_tilde=2, b_tilde=M, tune=0.6, beta_names=initial$beta_names,gam_n2_names=initial$gam_n2_names, lam_names=initial$lam_names, psi_names=initial$psi_names)
@@ -106,11 +103,11 @@ mechmodel<-function(meth,mrna,cnv,dsurv){
     ## !!! WARNING: I am using a kluge here b/c I know gene 49 is missing methylation.  If want to
     # do this with a new dataset, need to make this more general.
 
-    gam.mRNA  <- gam(as.formula(formula_all))
+    gam.mRNA  <- mgcv::gam(as.formula(formula_all))
     # If entire row is 0, coef is NA and scores%*%coef is NA.
     # Estimate pieces
-    fit_meth <- as.matrix(predict.gam(gam.mRNA,type="terms")[,1:num_scores_meth[i]] )
-    fit_CN <- as.matrix(predict.gam(gam.mRNA,type="terms")[,(num_scores_meth[i]+1):(num_scores_meth[i]+num_scores_CN[i])])
+    fit_meth <- as.matrix(mgcv::predict.gam(gam.mRNA,type="terms")[,1:num_scores_meth[i]] )
+    fit_CN <- as.matrix(mgcv::predict.gam(gam.mRNA,type="terms")[,(num_scores_meth[i]+1):(num_scores_meth[i]+num_scores_CN[i])])
 
     M <- apply(fit_meth,1,sum)
     CN <- apply(fit_CN,1,sum)
