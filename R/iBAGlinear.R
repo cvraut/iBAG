@@ -37,7 +37,8 @@ iBAG <- function(gene_expr,cnv,meth,out,iBAGtype="linear",fast=T,verbose=F){
     result$post_means <- res$betas
     result$prob_inclusion <- res$prob_inclusion
   } else {
-    nruns = 100*length(out)
+    nruns = 100*length(to_gibbs$Y)
+    burn_in <- floor(0.05*nruns)+1
     initial <- get_starting_values_NG(S=nruns, p=to_gibbs$p, k=to_gibbs$k, n=to_gibbs$n, X=to_gibbs$X, Y=to_gibbs$Y,names_to_keep = to_gibbs$names_to_keep)
     M <- mean(coef(lm(to_gibbs$Y~to_gibbs$X - 1))^2)
     final <- MC_samples_NG_no_sig_sq_in_beta_prior(PARAM=initial$PARAM, X=to_gibbs$X, Y=to_gibbs$Y, p=to_gibbs$p, k=to_gibbs$k, n=to_gibbs$n,a=0.001, b=0.001, c=1, a_tilde=2, b_tilde=M, tune=0.6, beta_names=initial$beta_names,gam_n2_names=initial$gam_n2_names, lam_names=initial$lam_names, psi_names=initial$psi_names)
