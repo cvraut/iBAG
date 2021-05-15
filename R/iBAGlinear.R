@@ -1,15 +1,4 @@
-# linear iBAG
-
-library(mgcv)
-library(glmnet)
-library(MASS)
-library(MCMCpack)
-library(HyperbolicDist)
-
-meth<-read.csv("./data/methylationdata.csv")
-mrna<-read.csv("./data/mrnadata.csv")
-cnv<-read.csv("./data/copynumberdata.csv")
-dsurv<-read.csv("./data/survivaltimes.csv")
+# Functions pertaining to the linear iBAG
 
 
 #' Fit the iBAG framework on the data
@@ -39,7 +28,7 @@ iBAG <- function(gene_expr,cnv,meth,out,iBAGtype="linear",fast=T,verbose=F){
     result$post_means <- res$betas
     result$prob_inclusion <- res$prob_inclusion
   } else {
-    nruns = 100*length(to_gibbs$Y)
+    nruns = 10*length(to_gibbs$Y)
     burn_in <- floor(0.05*nruns)+1
     initial <- get_starting_values_NG(S=nruns, p=to_gibbs$p, k=to_gibbs$k, n=to_gibbs$n, X=to_gibbs$X, Y=to_gibbs$Y,names_to_keep = to_gibbs$names_to_keep)
     M <- mean(coef(lm(to_gibbs$Y~to_gibbs$X - 1))^2)
