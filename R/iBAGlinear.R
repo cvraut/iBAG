@@ -1,8 +1,10 @@
 # Functions pertaining to the linear iBAG
 
 
+
 #' Fit the iBAG framework on the data
 #'
+
 #' @param gene_expr an N (individuals) by k (genes) matrix/dataframe of mrna expression (numeric)
 #' @param cnv an N (individuals) by k (genes) matrix/dataframe of cnv data (numeric)
 #' @param meth an N (individuals) by k (genes) matrix/dataframe of methylation data (numeric)
@@ -156,11 +158,11 @@ mechmodel<-function(meth,mrna,cnv,dsurv){
     ## !!! WARNING: I am using a kluge here b/c I know gene 49 is missing methylation.  If want to
     # do this with a new dataset, need to make this more general.
 
-    gam.mRNA  <- gam(as.formula(formula_all))
+    gam.mRNA  <- mgcv::gam(as.formula(formula_all))
     # If entire row is 0, coef is NA and scores%*%coef is NA.
     # Estimate pieces
-    fit_meth <- as.matrix(predict.gam(gam.mRNA,type="terms")[,1:num_scores_meth[i]] )
-    fit_CN <- as.matrix(predict.gam(gam.mRNA,type="terms")[,(num_scores_meth[i]+1):(num_scores_meth[i]+num_scores_CN[i])])
+    fit_meth <- as.matrix(mgcv::predict.gam(gam.mRNA,type="terms")[,1:num_scores_meth[i]] )
+    fit_CN <- as.matrix(mgcv::predict.gam(gam.mRNA,type="terms")[,(num_scores_meth[i]+1):(num_scores_meth[i]+num_scores_CN[i])])
 
     M <- apply(fit_meth,1,sum)
     CN <- apply(fit_CN,1,sum)
