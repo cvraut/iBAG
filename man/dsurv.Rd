@@ -3,8 +3,7 @@
 \docType{data}
 \name{dsurv}
 \alias{dsurv}
-\title{Survival data of 163 individuals.
-Data obtained from ??? at ???}
+\title{Survival data}
 \format{
 A data frame with 163 rows and 2 variables
 }
@@ -12,8 +11,8 @@ A data frame with 163 rows and 2 variables
 data(dsurv)
 }
 \description{
-A dataset containing the prices and other attributes of almost 54,000
-diamonds. The variables are as follows:
+Survival data, measured in ???, of 163 individuals suffering from Glioblastoma.
+Data obtained from ??? at ???.
 }
 \details{
 \itemize{

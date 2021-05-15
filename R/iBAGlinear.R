@@ -246,8 +246,8 @@ get_starting_values_NG <- function(S, p, k, n, X, Y, names_to_keep, my_seed=samp
   #
 
   # priors set here
-  lasso_out <- glmnet(X,Y)
-  cv_lasso_out <- cv.glmnet(X,Y)
+  lasso_out <- glmnet::glmnet(X,Y)
+  cv_lasso_out <- glmnet::cv.glmnet(X,Y)
   PARAM[1,beta_names] <- coef(lasso_out,s=cv_lasso_out$lambda.min)[-1,]
   # [-1,] b/c don't want the intercept.
   # Using lambda.min instead of lambda.1se b/c lambda.1se returns the largest lambda -- all betas = 0.
@@ -286,14 +286,14 @@ MC_samples_NG_no_sig_sq_in_beta_prior <- function(PARAM, X, Y, p, k, n, a, b, c,
     ## Update betas ##
     our_mean <- solve(t(X)%*%X+param[1,"sig_sq"]*diag(1/param[1,psi_names]))%*%t(X)%*%Y
     our_cov  <- param[1,"sig_sq"]*solve(t(X)%*%X+param[1,"sig_sq"]*diag(1/param[1,psi_names]))
-    param[1,beta_names] <- mvrnorm(n=1, mu=our_mean, Sigma=our_cov)   # n=1 gives one sample of length(mu).
+    param[1,beta_names] <- MASS::mvrnorm(n=1, mu=our_mean, Sigma=our_cov)   # n=1 gives one sample of length(mu).
 
     ## Update sig_sq ##
     our_a <- a+n/2
     our_b <- b+(1/2)*(t(Y-X%*%param[1,beta_names])%*%(Y-X%*%param[1,beta_names]) )
     # NOTE: don't need to use as.matrix for betas vector b/c R coerces it using as.matrix which
     # results in a column vector (which is what we need).
-    param[1,"sig_sq"] <- rinvgamma(n=1, shape=our_a, scale=our_b)
+    param[1,"sig_sq"] <- MCMCpack::rinvgamma(n=1, shape=our_a, scale=our_b)
 
     ## Update psi's ##
     for (jj in 1:k) {
@@ -302,7 +302,7 @@ MC_samples_NG_no_sig_sq_in_beta_prior <- function(PARAM, X, Y, p, k, n, a, b, c,
       our_bb[our_bb<10^(-10)] <- 10^(-10)	# Kluge to keep rgig() happy.
       our_p <- param[1,lam_names[jj]] - (1/2)
       param[1,psi_names[ cumsum(c(1,p))[jj]:cumsum(p)[jj] ]] <-
-        apply(as.matrix(our_bb), 1, function(t) rgig(n=1,Theta=c(lambda=our_p,chi=t,psi=our_aa)))
+        apply(as.matrix(our_bb), 1, function(t) HyperbolicDist::rgig(n=1,Theta=c(lambda=our_p,chi=t,psi=our_aa)))
     }
 
     ## Update lam[i]'s ##
