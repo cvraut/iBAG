@@ -12,7 +12,11 @@ Imports:
     HyperbolicDist,
     MASS,
     MCMCpack,
-    mgcv
+    mgcv,
+    R6,
+    stringr,
+    tidyverse,
+    graper
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
