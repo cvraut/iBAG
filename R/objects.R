@@ -5,9 +5,19 @@
 # required to build the classes
 library(R6)
 
-# iBAG data class
+
+#' iBAG_data
+#'
+#' @name iBAG_data
+#'
+#' @export
 iBAG_data <- R6Class("iBAG_data",
   public = list(
+    #'
+    #' @param DEBUG boolean: initialize object in DEBUG mode
+    #' @param print_status boolean: initialize object to print (to stdout) everything that it does
+    #' @param ... : ...
+    #'
     initialize = function(DEBUG = FALSE,print_status=FALSE,...){
       # This constructor is quite flexible
       # meth_file character: file name for the methylation data file
@@ -26,15 +36,33 @@ iBAG_data <- R6Class("iBAG_data",
       private$print_status = print_status
 
       #
-      private$meth_file = system.file("data","methylationdata.csv",package = "iBAGpkg")
-      private$mrna_file = system.file("data","mrnadata.csv",package = "iBAGpkg")
-      private$cnv_file = system.file("data","copynumberdata.csv",package = "iBAGpkg")
-      private$outcome_file = system.file("data","survivaltimes.csv",package = "iBAGpkg")
+      #private$meth_file = system.file("data","methylationdata.csv",package = "iBAGpkg")
+      #private$mrna_file = system.file("data","mrnadata.csv",package = "iBAGpkg")
+      #private$cnv_file = system.file("data","copynumberdata.csv",package = "iBAGpkg")
+      #private$outcome_file = system.file("data","survivaltimes.csv",package = "iBAGpkg")
 
-      #private$meth = read.csv(meth_file)
-      #mrna = read.csv(mrna_file)
-      #cnv = read.csv(cnv_file)
+      private$meth = iBAGpkg::demo_meth
+      private$mrna = iBAGpkg::demo_mrna
+      private$cnv = iBAGpkg::demo_cnv
+      private$outcome = iBAGpkg::demo_outcome
 
+      kwargs <- list(...)
+    },
+    #'
+    get.meth = function(){
+      return(private$meth)
+    },
+    #'
+    get.cnv = function(){
+      return(private$cnv)
+    },
+    #'
+    get.mrna = function(){
+      return(private$mrna)
+    },
+    #'
+    get.outcome = function(){
+      return(private$outcome)
     }
   ),
   private = list(
@@ -48,6 +76,3 @@ iBAG_data <- R6Class("iBAG_data",
     print_status = NULL
   )
 )
-
-
-# setClass("iBAG", )
