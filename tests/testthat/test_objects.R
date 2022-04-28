@@ -1,4 +1,4 @@
-library(iBAGpkg)
+library(iBAG)
 
 testthat::test_that("Check null constructor for iBAG_data",{
   my.data <- iBAG_data$new()

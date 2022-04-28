@@ -1,4 +1,4 @@
-library(iBAGpkg)
+library(iBAG)
 
 testthat::test_that("Check data sizes & loading",{
   testthat::expect_true(all(dim(demo_meth) == c(163,176)))

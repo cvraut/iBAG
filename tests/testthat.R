@@ -1,4 +1,3 @@
 library(testthat)
-library(iBAGpkg)
-
-test_check("iBAGpkg")
+library(iBAG)
+test_check("iBAG")
