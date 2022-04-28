@@ -12,7 +12,7 @@ library(mgcv)
 #' @param ...
 #'
 #' @export
-mechmodel <- function(meth,mrna,cnv,DEBUG=TRUE,...){
+mech.model <- function(meth,mrna,cnv,DEBUG=TRUE,...){
   genes <- colnames(mrna)
   n <- dim(mrna)[1]
   p <- length(genes)
@@ -20,12 +20,12 @@ mechmodel <- function(meth,mrna,cnv,DEBUG=TRUE,...){
 
   PC_VAR_THRESH = 0.09
 
-  X <- matrix(NA,nrow=n,ncol=p*k)
-  row.names(X) <- rownames(mrna)
-  colnames(X) <- paste(rep(c("Meth","CN","Other"),each=p),rep(genes,3),sep="_")
-  SS <- matrix(NA,nrow=p,ncol = 4)
-  colnames(SS) <- c("SST","SSM","SSCN","SSO")
-  row.names(SS) <- genes
+  X <<- matrix(NA,nrow=n,ncol=p*k)
+  row.names(X) <<- rownames(mrna)
+  colnames(X) <<- paste(rep(c("Meth","CN","Other"),each=p),rep(genes,3),sep="_")
+  SS <<- matrix(NA,nrow=p,ncol = 4)
+  colnames(SS) <<- c("SST","SSM","SSCN","SSO")
+  row.names(SS) <<- genes
   collapse_gene_data <- function(gene_i,data){
     ind_data <- grep(genes[gene_i],colnames(data))
     if(DEBUG){
@@ -45,7 +45,7 @@ mechmodel <- function(meth,mrna,cnv,DEBUG=TRUE,...){
     }
     return(scores_data)
   }
-  process_gene <- function(gene_i){
+  process_gene <- function(gene_i,X,SS){
     if(mean(mrna[,gene_i]) != 0){
       mrna[,gene_i] <- mrna[,gene_i] - mean(mrna[,gene_i])
       if(DEBUG){
@@ -79,26 +79,23 @@ mechmodel <- function(meth,mrna,cnv,DEBUG=TRUE,...){
     M <- apply(fit_meth,1,sum)
     CN <- apply(fit_cnv,1,sum)
     O <- gam.mrna$residuals
-    X[,paste("Meth",genes[gene_i],sep="_")]   <-  M
-    X[,paste("CN",genes[gene_i],sep="_")] <- CN
-    X[,paste("Other",genes[gene_i],sep="_")] <- O
+    X[,paste("Meth",genes[gene_i],sep="_")]   <<-  M
+    X[,paste("CN",genes[gene_i],sep="_")] <<- CN
+    X[,paste("Other",genes[gene_i],sep="_")] <<- O
     # Pseudo Sums of Squares (to use to find percentages of explained variance)
-    SS[gene_i,1] <- sum( (mrna[,gene_i] - mean(mrna[,gene_i]))^2 )
-    SS[gene_i,2] <- sum( ( (M) - mean(mrna[,gene_i]) )^2  )
-    SS[gene_i,3] <- sum( ( (CN) - mean(mrna[,gene_i]) )^2  )
-    SS[gene_i,4] <- SS[gene_i,1] - SS[gene_i,2] - SS[gene_i,3]
+    SS[gene_i,1] <<- sum( (mrna[,gene_i] - mean(mrna[,gene_i]))^2 )
+    SS[gene_i,2] <<- sum( ( (M) - mean(mrna[,gene_i]) )^2  )
+    SS[gene_i,3] <<- sum( ( (CN) - mean(mrna[,gene_i]) )^2  )
+    SS[gene_i,4] <<- SS[gene_i,1] - SS[gene_i,2] - SS[gene_i,3]
     if(DEBUG){
       print(SS[gene_i,1])
       print(SS[gene_i,2])
       print(SS[gene_i,3])
       print(SS[gene_i,4])
-      if(SS[gene_i,4] < 0){
-        print("we got a problem here")
-      }
     }
   }
   # note parallel later ...
-  sapply(1:p,FUN=process_gene)
+  sapply(1:p,FUN=function(i){process_gene(i,X,SS)})
   return(list(X=X,
               SS=SS))
 }

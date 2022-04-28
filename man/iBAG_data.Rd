@@ -12,6 +12,10 @@ iBAG_data
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{iBAG_data$new()}}
+\item \href{#method-get.meth}{\code{iBAG_data$get.meth()}}
+\item \href{#method-get.cnv}{\code{iBAG_data$get.cnv()}}
+\item \href{#method-get.mrna}{\code{iBAG_data$get.mrna()}}
+\item \href{#method-get.outcome}{\code{iBAG_data$get.outcome()}}
 \item \href{#method-clone}{\code{iBAG_data$clone()}}
 }
 }
@@ -34,6 +38,42 @@ iBAG_data
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.meth"></a>}}
+\if{latex}{\out{\hypertarget{method-get.meth}{}}}
+\subsection{Method \code{get.meth()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.meth()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.cnv"></a>}}
+\if{latex}{\out{\hypertarget{method-get.cnv}{}}}
+\subsection{Method \code{get.cnv()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.cnv()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.mrna"></a>}}
+\if{latex}{\out{\hypertarget{method-get.mrna}{}}}
+\subsection{Method \code{get.mrna()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.mrna()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.outcome"></a>}}
+\if{latex}{\out{\hypertarget{method-get.outcome}{}}}
+\subsection{Method \code{get.outcome()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.outcome()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
