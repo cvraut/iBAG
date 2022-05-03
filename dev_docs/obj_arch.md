@@ -5,6 +5,7 @@ this is a help doc created to organize key architecture designs
 *NOTE*: using an object oriented approach so that we can construct new versions
 of iBAG like surviBAG or piBAG using inheritance & we can establish a consistent
  framework.
+
 ----------
 ## objects.R
 ----------

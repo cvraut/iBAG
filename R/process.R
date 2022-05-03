@@ -1,6 +1,32 @@
 # process.R
 # file to process & sanitize data
 
+#' data.validate
+#'
+#' @param mrna :mrna data (follow convention of demo_mrna)
+#' @param outcome: outcome data (follow demo conventions)
+#' @param data :list of other dataframes (follow demo conventions)
+#' @param DEBUG FALSE: flag to print debug statements
+#' @param ...
+#' @return boolean: whether this set of iBAG data is valid
+#'
+#' This function checks:
+#'  - patients match across the list of datasets in data and mrna
+#'  - patients in outcome are in mrna and data
+#'  - genes match across mrna & data
+#'
+#' A match across patient vector is defined as equivalent order and size.
+#' A match across gene vector is defined as each gene in mrna appears at least
+#' once in each dataset in data.
+#' @export
+data.validate <- function(mrna,
+                       data,
+                       DEBUG = FALSE,
+                       ...){
+  #NOTE: I am here!
+}
+
+
 #' data.collapse
 #'
 #' @param mrna

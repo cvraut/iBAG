@@ -11,37 +11,40 @@
 #' @format A data frame with ??? rows and ??? variables
 #'
 #' @export
-demo_meth <-read.csv(system.file("data","methylationdata.csv",package = "iBAGpkg"), row.names = 1,header = TRUE)
+demo_meth <-read.csv(system.file("data","meth.csv",package = "iBAG"),row.names = 1,header = TRUE)
 
-#' mRNA expression data for ???
+#' mRNA expression data for TCGA-BRCA, note we filter out to only 1218 genes to keep the dataset "small".
+#' The 1st column refers to the patient ids
 #'
 #' @docType data
 #' @keywords datasets
 #' @name demo_mrna
 #' @usage data(demo_mrna)
-#' @format A data frame with ??? rows and ??? variables
+#' @format A data frame with 770 rows and 1219 variables
 #'
 #' @export
-demo_mrna <-read.csv(system.file("data","mrnadata.csv",package = "iBAGpkg"), row.names = 1,header = TRUE)
+demo_mrna <-read.csv(system.file("data","mrna.csv",package = "iBAG"),row.names = 1,header = TRUE)
 
-#' cnv data for ???
+#' cnv data for TCGA-BRCA, note we filter out to only 1218 genes to keep the dataset "small"
+#' We already condense the cnv to single number summaries per gene
+#' The 1st column refers to the patient ids
 #'
 #' @docType data
 #' @keywords datasets
 #' @name demo_cnv
 #' @usage data(demo_cnv)
-#' @format A data frame with ??? rows and ??? variables
+#' @format A data frame with 770 rows and 1219 variables
 #'
 #' @export
-demo_cnv <-read.csv(system.file("data","copynumberdata.csv",package = "iBAGpkg"), row.names = 1,header = TRUE)
+demo_cnv <-read.csv(system.file("data","cnv.csv",package = "iBAG"),row.names = 1,header = TRUE)
 
-#' outcome data for ???
+#' EREG-mRNA stemness index outcome data for TCGA-BRCA
 #'
 #' @docType data
 #' @keywords datasets
 #' @name demo_outcome
 #' @usage data(demo_outcome)
-#' @format A data frame with ??? rows and ??? variables
+#' @format A data frame with 770 rows and 2 variables
 #'
 #' @export
-demo_outcome <-read.csv(system.file("data","survivaltimes.csv",package = "iBAGpkg"), row.names = 1,header = TRUE)
+demo_outcome <-read.csv(system.file("data","outcome.csv",package = "iBAG"),row.names = 1,header = TRUE)
