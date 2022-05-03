@@ -17,59 +17,61 @@ iBAG_data <- R6Class("iBAG_data",
     #' @param print_status boolean: initialize object to print (to stdout) everything that it does
     #' @param ... : ...
     #'
-    initialize = function(DEBUG = FALSE,print_status=FALSE,...){
-      # This constructor is quite flexible
-      # meth_file character: file name for the methylation data file
-      # mrna_file character: file name for the mrna expression data file
-      # cnv_file character: file name for the cnv data file
-      # outcome_file character: file name for the outcome file
-      # meth dataframe: methylation data (takes precedence over meth_file)
-      # mrna dataframe: mrna data (takes precedence over the mrna_file)
-      # cnv dataframe: cnv data (takes precedence over cnv_file)
-      # outcome dataframe: outcome data (takes precedence over the outcome_file)
-      # DEBUG boolean = FALSE: flag for whether to print DEBUG information
-      # print_status boolean = FALSE: flag for whether to print progress
-
-      # status flags
+    initialize = function(mrna = iBAG::demo_mrna,
+                          outcome = iBAG::demo_outcome,
+                          data1 = iBAG::demo_cnv,
+                          DEBUG = FALSE,
+                          print_status=FALSE,...){
       private$DEBUG = DEBUG
       private$print_status = print_status
 
-      #
-      #private$meth_file = system.file("data","methylationdata.csv",package = "iBAGpkg")
-      #private$mrna_file = system.file("data","mrnadata.csv",package = "iBAGpkg")
-      #private$cnv_file = system.file("data","copynumberdata.csv",package = "iBAGpkg")
-      #private$outcome_file = system.file("data","survivaltimes.csv",package = "iBAGpkg")
-
-      private$meth = iBAGpkg::demo_meth
-      private$mrna = iBAGpkg::demo_mrna
-      private$cnv = iBAGpkg::demo_cnv
-      private$outcome = iBAGpkg::demo_outcome
+      private$mrna = mrna
+      private$outcome = outcome
+      private$data = list(data1)
 
       kwargs <- list(...)
     },
     #'
-    get.meth = function(){
-      return(private$meth)
-    },
-    #'
-    get.cnv = function(){
-      return(private$cnv)
+    get.data = function(k=1){
+      if(private$DEBUG){
+        print(k)
+        print(dim(private$data[[k]]))
+      }
+      return(private$data[[k]])
     },
     #'
     get.mrna = function(){
+      if(private$DEBUG){
+        print(dim(private$mrna))
+      }
       return(private$mrna)
     },
     #'
     get.outcome = function(){
+      if(private$DEBUG){
+        print(dim(private$outcome))
+      }
       return(private$outcome)
+    },
+    get.k = function(){
+      return(length(private$data))
+    },
+    n_patients = function(){
+      return(dim(private$mrna)[1])
+    },
+    get.patients = function(){
+      return(row.names(private$mrna))
+    },
+    n_genes = function(){
+      return(dim(private$mrna)[2])
+    },
+    get.genes = function(){
+      return(colnames(private$mrna))
     }
   ),
   private = list(
-    n_genes = NA,
-    n_patients = NA,
+    data = NULL,
     mrna = NULL,
-    meth = NULL,
-    cnv = NULL,
     outcome = NULL,
     DEBUG = NULL,
     print_status = NULL
