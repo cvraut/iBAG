@@ -5,7 +5,7 @@
 \alias{demo_meth}
 \title{demo_meth}
 \format{
-A data frame with ??? rows and ??? variables
+A data frame with 770 rows and 1218 variables
 }
 \usage{
 data(demo_meth)

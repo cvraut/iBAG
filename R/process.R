@@ -5,19 +5,14 @@
 #' @name data.validate
 #' @description Validates mrna, outcome, and upstream data to ensure patients & genes match.
 #' @details
-#' This function checks:
-#'  - patients match across the list of datasets in data and mrna
-#'  - patients in outcome are in mrna and data
-#'  - genes match across mrna & data
+#' Runs the data.validate.patients & data.validate.genes subroutines. Consult them directly for more information
 #'
-#' A match across patient vector is defined as equivalent order and content.
-#' A match across gene vector is defined as each gene in mrna appears at least
-#' once in each dataset in data.
 #' @usage data.validate(mrna,outcome,data)
 #'
 #' @param mrna mrna data (follow convention of demo_mrna)
 #' @param outcome outcome data (follow demo conventions)
 #' @param data list of other dataframes (follow demo conventions)
+#' @param sep ("_"): the character seperator to use to differentiate mutliple columns of data per gene
 #' @param DEBUG (FALSE) flag to print debug statements
 #' @return (boolean) whether this set of iBAG data is valid
 #'
@@ -25,9 +20,10 @@
 data.validate <- function(mrna,
                           outcome,
                           data,
+                          sep="",
                           DEBUG = FALSE,
                           ...){
-  return(FALSE)
+  return(iBAG::data.validate.patients(mrna = mrna,outcome = outcome,data = data,DEBUG = DEBUG) & iBAG::data.validate.genes(mrna = mrna,data = data,sep=sep,DEBUG=DEBUG))
 }
 
 
@@ -36,8 +32,9 @@ data.validate <- function(mrna,
 #' @description Validates mrna, outcome, and upstream data to ensure patients match.
 #' @details
 #' This function checks:
-#'  - patients match across the list of datasets in data and mrna
-#'  - patients in outcome are in mrna and data
+#'   - patients are unique in mrna
+#'   - patients match across the list of datasets in data and mrna
+#'   - patients in outcome are in mrna and data
 #'
 #' A match across patient vector is defined as equivalent order and content.
 #' @usage data.validate.patients(mrna,outcome,data)
@@ -57,13 +54,18 @@ data.validate.patients <- function(mrna,
                                    DEBUG = FALSE,
                                    ...){
   pat.list <- row.names(mrna)
-  if(!identical(pat.list,row.names(outcome))){
+  if(length(pat.list) != length(unique(pat.list))){
+    if(DEBUG){
+      print("mrna has duplicate rows")
+    }
+    return(FALSE)
+  } else if(!identical(pat.list,row.names(outcome))){
     if(DEBUG){
       print("mrna & outcome ids don't match")
     }
     return(FALSE)
   }
-  result <- sapply(data,FUN = function(data){return(identical(pat.list,row.names(data)))})
+  result <- sapply(data,FUN = function(dataset){return(identical(pat.list,row.names(dataset)))})
   if(DEBUG){
     print("output of identical across rows of data:")
     print(result)
@@ -71,23 +73,99 @@ data.validate.patients <- function(mrna,
   return(all(result))
 }
 
-#' data.collapse
-#' @name data.collapse
+#' data.validate.genes
+#' @name data.validate.genes
+#' @description Validates mrna and upstream data to ensure genes match.
+#' @details
+#' This function checks:
+#'   - all genes are unique in mrna
+#'   - all columns are unique across all datasets
+#'   - given an upstream data platform:
+#'     - for each gene in mrna there is at least 1 gene present
+#'     - upstream platforms do not contain genes which are not present in mrna
+#'
+#' A match across gene makes use of the {sep} argument. First a regex is constructed
+#' from the mrna such as r"{GENE}({SEP}.+)?" then all gene data is found by matching this pattern.
+#'
+#' Note: gene names are automatically converted to strings
+#'
+#' Note: SEP should not be able to be found in any of the genes from mrna (auto-fail if sep="")
+#'
+#' Note: if SEP == NULL then this method will perform perfect matches similar to data.validate.patient
+#'
+#' Note: the order of the genes don't have to match, but it is important that the contents do.
+#'
+#' @usage data.validate.genes(mrna,data)
+#'
+#' For each dataset the patient vector is assumed to be the rownames.
+#' @param mrna :mrna data (follow convention of demo_mrna)
+#' @param data :list of other dataframes (follow demo conventions)
+#' @param sep ("_"): the character seperator to use to differentiate mutliple columns of data per gene
+#' @param DEBUG FALSE: flag to print debug statements
+#' @return boolean: whether this set of iBAG data is valid for the genes only
+#'
+#'
+#' @export
+data.validate.genes <- function(mrna,
+                                data,
+                                sep="_",
+                                DEBUG = FALSE,
+                                ...){
+  genes.list <- paste(colnames(mrna))
+  if(length(genes.list) != length(unique(genes.list)) | any(sapply(data,FUN = function(src){return(length(colnames(src))!=length(unique(colnames(src))))}))){
+    if(DEBUG){
+      print("genes in mrna or columns of data were not unique")
+    }
+    return(FALSE)
+  }
+  if(is.null(sep)){
+    genes.list <- sort(genes.list)
+    result <- sapply(data,FUN = function(data){return(identical(genes.list,sort(paste(colnames(data)))))})
+    if(DEBUG){
+      print("output of identical across rows of data:")
+      print(result)
+    }
+    return(all(result))
+  } else if(sep == ""){
+    if(DEBUG){
+      print('sep == "" case')
+    }
+    return(FALSE)
+  } else{
+    # if sep is found in genes.list
+    if(any(grep(sep,genes.list,fixed=TRUE))){
+      return(FALSE)
+    }
+    get_gene_cnts <- function(gene,sep,probes){
+      patt <- sprintf("^%s(%s.+)?$",gene,sep)
+      res <- stringr::str_count(probes,pattern = patt)
+      return(sum(res))
+    }
+    check_dataset <- function(dataset){
+      probes <- paste(colnames(dataset))
+      return(sum(sapply(genes.list,FUN = function(gene){return(get_gene_cnts(gene,sep,probes))})) == length(probes))
+    }
+    return(all(sapply(data,FUN = function(dataset){return(check_dataset(dataset))})))
+  }
+}
+
+#' dataset.collapse.pc.singular
+#' @name dataset.collapse.pc.singular
 #' @description Collapses data which has >1 column per gene using PCA
 #' @usage data.collapse(mrna, data)
 #'
 #' @param mrna : dataframe for mrna (follows demo)
-#' @param data : list of data that needs to consolidated
-#' @param PC_VAR_THRESH : The threshold for PCs to accept
-#' @param pc_collapse : The additional consolidation function applied to selected PCs
+#' @param dataset : dataset that needs to consolidated (follows format demo)
+#' @param PC_VAR_THRESH (0.09): The % threshold for PCs to accept based on scale of eigenvalue (must be <1)
+#' @param pc_collapse : The additional consolidation function applied to selected PCs. (default take the max)
 #' @param DEBUG FALSE: flag to print debug statements
 #'
 #' @export
-data.collapse <- function(mrna,
-                          data,
-                          PC_VAR_THRESH = 0.09,
-                          pc_collapse = function(pcs){return(pcs[1])},
-                          DEBUG=FALSE,...){
+dataset.collapse.pc.singular <- function(mrna,
+                                         dataset,
+                                         PC_VAR_THRESH = 0.09,
+                                         pc_collapse = function(pcs){return(pcs[1])},
+                                         DEBUG=FALSE,...){
   genes <- colnames(mrna)
   n <- dim(mrna)[1]
   p <- length(genes)
@@ -116,8 +194,8 @@ data.collapse <- function(mrna,
     return(scores_data)
   }
 
-  # note parallel later ...
-  data.collapsed <- sapply(1:p,FUN=function(i){collapse_gene_data(i,data)})
+  # Note: parallel later ...
+  data.collapsed <- sapply(1:p,FUN=function(i){collapse_gene_data(i,dataset)})
   row.names(data.collapsed) <- row.names(mrna)
   colnames(data.collapsed) <- colnames(mrna)
   return(data.collapsed)

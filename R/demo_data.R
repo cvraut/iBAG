@@ -10,7 +10,7 @@
 #' @keywords datasets
 #' @name demo_meth
 #' @usage data(demo_meth)
-#' @format A data frame with ??? rows and ??? variables
+#' @format A data frame with 770 rows and 1218 variables
 #'
 #' @export
 demo_meth <-read.csv(system.file("data","meth.csv",package = "iBAG"),row.names = 1,header = TRUE)
@@ -24,7 +24,7 @@ demo_meth <-read.csv(system.file("data","meth.csv",package = "iBAG"),row.names =
 #' @keywords datasets
 #' @name demo_mrna
 #' @usage data(demo_mrna)
-#' @format A data frame with 770 rows and 1219 variables
+#' @format A data frame with 770 rows and 1218 variables
 #'
 #' @export
 demo_mrna <-read.csv(system.file("data","mrna.csv",package = "iBAG"),row.names = 1,header = TRUE)
@@ -39,7 +39,7 @@ demo_mrna <-read.csv(system.file("data","mrna.csv",package = "iBAG"),row.names =
 #' @keywords datasets
 #' @name demo_cnv
 #' @usage data(demo_cnv)
-#' @format A data frame with 770 rows and 1219 variables
+#' @format A data frame with 770 rows and 1218 variables
 #'
 #' @export
 demo_cnv <-read.csv(system.file("data","cnv.csv",package = "iBAG"),row.names = 1,header = TRUE)
@@ -52,7 +52,7 @@ demo_cnv <-read.csv(system.file("data","cnv.csv",package = "iBAG"),row.names = 1
 #' @keywords datasets
 #' @name demo_outcome
 #' @usage data(demo_outcome)
-#' @format A data frame with 770 rows and 2 variables
+#' @format A data frame with 770 rows and 1 variables
 #'
 #' @export
 demo_outcome <-read.csv(system.file("data","outcome.csv",package = "iBAG"),row.names = 1,header = TRUE)

@@ -5,7 +5,7 @@
 \alias{demo_mrna}
 \title{demo_mrna}
 \format{
-A data frame with 770 rows and 1219 variables
+A data frame with 770 rows and 1218 variables
 }
 \usage{
 data(demo_mrna)

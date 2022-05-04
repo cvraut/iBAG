@@ -13,6 +13,8 @@ data.validate(mrna,outcome,data)
 
 \item{data}{list of other dataframes (follow demo conventions)}
 
+\item{sep}{("_"): the character seperator to use to differentiate mutliple columns of data per gene}
+
 \item{DEBUG}{(FALSE) flag to print debug statements}
 }
 \value{
@@ -22,14 +24,5 @@ data.validate(mrna,outcome,data)
 Validates mrna, outcome, and upstream data to ensure patients & genes match.
 }
 \details{
-This function checks:
-\itemize{
-\item patients match across the list of datasets in data and mrna
-\item patients in outcome are in mrna and data
-\item genes match across mrna & data
-}
-
-A match across patient vector is defined as equivalent order and content.
-A match across gene vector is defined as each gene in mrna appears at least
-once in each dataset in data.
+Runs the data.validate.patients & data.validate.genes subroutines. Consult them directly for more information
 }

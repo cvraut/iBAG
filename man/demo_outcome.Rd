@@ -5,7 +5,7 @@
 \alias{demo_outcome}
 \title{demo_outcome}
 \format{
-A data frame with 770 rows and 2 variables
+A data frame with 770 rows and 1 variables
 }
 \usage{
 data(demo_outcome)

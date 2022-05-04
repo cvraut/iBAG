@@ -26,6 +26,7 @@ Validates mrna, outcome, and upstream data to ensure patients match.
 \details{
 This function checks:
 \itemize{
+\item patients are unique in mrna
 \item patients match across the list of datasets in data and mrna
 \item patients in outcome are in mrna and data
 }

@@ -5,7 +5,7 @@
 \alias{demo_cnv}
 \title{demo_cnv}
 \format{
-A data frame with 770 rows and 1219 variables
+A data frame with 770 rows and 1218 variables
 }
 \usage{
 data(demo_cnv)
