@@ -3,14 +3,17 @@
 \docType{data}
 \name{demo_outcome}
 \alias{demo_outcome}
-\title{outcome data for ???}
+\title{demo_outcome}
 \format{
-A data frame with ??? rows and ??? variables
+A data frame with 770 rows and 2 variables
 }
 \usage{
 data(demo_outcome)
 }
 \description{
-outcome data for ???
+demo_outcome
+}
+\details{
+EREG-mRNA stemness index outcome data for TCGA-BRCA
 }
 \keyword{datasets}

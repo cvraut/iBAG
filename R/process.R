@@ -2,37 +2,85 @@
 # file to process & sanitize data
 
 #' data.validate
-#'
-#' @param mrna :mrna data (follow convention of demo_mrna)
-#' @param outcome: outcome data (follow demo conventions)
-#' @param data :list of other dataframes (follow demo conventions)
-#' @param DEBUG FALSE: flag to print debug statements
-#' @param ...
-#' @return boolean: whether this set of iBAG data is valid
-#'
+#' @name data.validate
+#' @description Validates mrna, outcome, and upstream data to ensure patients & genes match.
+#' @details
 #' This function checks:
 #'  - patients match across the list of datasets in data and mrna
 #'  - patients in outcome are in mrna and data
 #'  - genes match across mrna & data
 #'
-#' A match across patient vector is defined as equivalent order and size.
+#' A match across patient vector is defined as equivalent order and content.
 #' A match across gene vector is defined as each gene in mrna appears at least
 #' once in each dataset in data.
+#' @usage data.validate(mrna,outcome,data)
+#'
+#' @param mrna mrna data (follow convention of demo_mrna)
+#' @param outcome outcome data (follow demo conventions)
+#' @param data list of other dataframes (follow demo conventions)
+#' @param DEBUG (FALSE) flag to print debug statements
+#' @return (boolean) whether this set of iBAG data is valid
+#'
 #' @export
 data.validate <- function(mrna,
-                       data,
-                       DEBUG = FALSE,
-                       ...){
-  #NOTE: I am here!
+                          outcome,
+                          data,
+                          DEBUG = FALSE,
+                          ...){
+  return(FALSE)
 }
 
 
-#' data.collapse
+#' data.validate.patients
+#' @name data.validate.patients
+#' @description Validates mrna, outcome, and upstream data to ensure patients match.
+#' @details
+#' This function checks:
+#'  - patients match across the list of datasets in data and mrna
+#'  - patients in outcome are in mrna and data
 #'
-#' @param mrna
-#' @param data
-#' @param DEBUG
-#' @param ...
+#' A match across patient vector is defined as equivalent order and content.
+#' @usage data.validate.patients(mrna,outcome,data)
+#'
+#' For each dataset the patient vector is assumed to be the rownames.
+#' @param mrna :mrna data (follow convention of demo_mrna)
+#' @param outcome: outcome data (follow demo conventions)
+#' @param data :list of other dataframes (follow demo conventions)
+#' @param DEBUG FALSE: flag to print debug statements
+#' @return boolean: whether this set of iBAG data is valid for the patients only
+#'
+#'
+#' @export
+data.validate.patients <- function(mrna,
+                                   outcome,
+                                   data,
+                                   DEBUG = FALSE,
+                                   ...){
+  pat.list <- row.names(mrna)
+  if(!identical(pat.list,row.names(outcome))){
+    if(DEBUG){
+      print("mrna & outcome ids don't match")
+    }
+    return(FALSE)
+  }
+  result <- sapply(data,FUN = function(data){return(identical(pat.list,row.names(data)))})
+  if(DEBUG){
+    print("output of identical across rows of data:")
+    print(result)
+  }
+  return(all(result))
+}
+
+#' data.collapse
+#' @name data.collapse
+#' @description Collapses data which has >1 column per gene using PCA
+#' @usage data.collapse(mrna, data)
+#'
+#' @param mrna : dataframe for mrna (follows demo)
+#' @param data : list of data that needs to consolidated
+#' @param PC_VAR_THRESH : The threshold for PCs to accept
+#' @param pc_collapse : The additional consolidation function applied to selected PCs
+#' @param DEBUG FALSE: flag to print debug statements
 #'
 #' @export
 data.collapse <- function(mrna,

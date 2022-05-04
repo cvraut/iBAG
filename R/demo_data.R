@@ -2,6 +2,8 @@
 # this File generates the demo data
 # by default it always loads the demo data
 
+#' demo_meth
+#' @details
 #' Methylation data for ???
 #'
 #' @docType data
@@ -13,6 +15,8 @@
 #' @export
 demo_meth <-read.csv(system.file("data","meth.csv",package = "iBAG"),row.names = 1,header = TRUE)
 
+#' demo_mrna
+#' @details
 #' mRNA expression data for TCGA-BRCA, note we filter out to only 1218 genes to keep the dataset "small".
 #' The 1st column refers to the patient ids
 #'
@@ -25,6 +29,8 @@ demo_meth <-read.csv(system.file("data","meth.csv",package = "iBAG"),row.names =
 #' @export
 demo_mrna <-read.csv(system.file("data","mrna.csv",package = "iBAG"),row.names = 1,header = TRUE)
 
+#' demo_cnv
+#' @details
 #' cnv data for TCGA-BRCA, note we filter out to only 1218 genes to keep the dataset "small"
 #' We already condense the cnv to single number summaries per gene
 #' The 1st column refers to the patient ids
@@ -38,6 +44,8 @@ demo_mrna <-read.csv(system.file("data","mrna.csv",package = "iBAG"),row.names =
 #' @export
 demo_cnv <-read.csv(system.file("data","cnv.csv",package = "iBAG"),row.names = 1,header = TRUE)
 
+#' demo_outcome
+#' @details
 #' EREG-mRNA stemness index outcome data for TCGA-BRCA
 #'
 #' @docType data

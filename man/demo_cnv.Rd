@@ -3,14 +3,19 @@
 \docType{data}
 \name{demo_cnv}
 \alias{demo_cnv}
-\title{cnv data for ???}
+\title{demo_cnv}
 \format{
-A data frame with ??? rows and ??? variables
+A data frame with 770 rows and 1219 variables
 }
 \usage{
 data(demo_cnv)
 }
 \description{
-cnv data for ???
+demo_cnv
+}
+\details{
+cnv data for TCGA-BRCA, note we filter out to only 1218 genes to keep the dataset "small"
+We already condense the cnv to single number summaries per gene
+The 1st column refers to the patient ids
 }
 \keyword{datasets}

@@ -12,10 +12,14 @@ iBAG_data
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{iBAG_data$new()}}
-\item \href{#method-get.meth}{\code{iBAG_data$get.meth()}}
-\item \href{#method-get.cnv}{\code{iBAG_data$get.cnv()}}
+\item \href{#method-get.data}{\code{iBAG_data$get.data()}}
 \item \href{#method-get.mrna}{\code{iBAG_data$get.mrna()}}
 \item \href{#method-get.outcome}{\code{iBAG_data$get.outcome()}}
+\item \href{#method-get.k}{\code{iBAG_data$get.k()}}
+\item \href{#method-n_patients}{\code{iBAG_data$n_patients()}}
+\item \href{#method-get.patients}{\code{iBAG_data$get.patients()}}
+\item \href{#method-n_genes}{\code{iBAG_data$n_genes()}}
+\item \href{#method-get.genes}{\code{iBAG_data$get.genes()}}
 \item \href{#method-clone}{\code{iBAG_data$clone()}}
 }
 }
@@ -24,7 +28,14 @@ iBAG_data
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$new(DEBUG = FALSE, print_status = FALSE, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$new(
+  mrna = iBAG::demo_mrna,
+  outcome = iBAG::demo_outcome,
+  data1 = iBAG::demo_cnv,
+  DEBUG = FALSE,
+  print_status = FALSE,
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -40,20 +51,11 @@ iBAG_data
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.meth"></a>}}
-\if{latex}{\out{\hypertarget{method-get.meth}{}}}
-\subsection{Method \code{get.meth()}}{
+\if{html}{\out{<a id="method-get.data"></a>}}
+\if{latex}{\out{\hypertarget{method-get.data}{}}}
+\subsection{Method \code{get.data()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.meth()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.cnv"></a>}}
-\if{latex}{\out{\hypertarget{method-get.cnv}{}}}
-\subsection{Method \code{get.cnv()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.cnv()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.data(k = 1)}\if{html}{\out{</div>}}
 }
 
 }
@@ -72,6 +74,51 @@ iBAG_data
 \subsection{Method \code{get.outcome()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.outcome()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.k"></a>}}
+\if{latex}{\out{\hypertarget{method-get.k}{}}}
+\subsection{Method \code{get.k()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.k()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-n_patients"></a>}}
+\if{latex}{\out{\hypertarget{method-n_patients}{}}}
+\subsection{Method \code{n_patients()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$n_patients()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.patients"></a>}}
+\if{latex}{\out{\hypertarget{method-get.patients}{}}}
+\subsection{Method \code{get.patients()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.patients()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-n_genes"></a>}}
+\if{latex}{\out{\hypertarget{method-n_genes}{}}}
+\subsection{Method \code{n_genes()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$n_genes()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.genes"></a>}}
+\if{latex}{\out{\hypertarget{method-get.genes}{}}}
+\subsection{Method \code{get.genes()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.genes()}\if{html}{\out{</div>}}
 }
 
 }

@@ -3,7 +3,7 @@
 \docType{data}
 \name{demo_meth}
 \alias{demo_meth}
-\title{Methylation data for ???}
+\title{demo_meth}
 \format{
 A data frame with ??? rows and ??? variables
 }
@@ -11,6 +11,9 @@ A data frame with ??? rows and ??? variables
 data(demo_meth)
 }
 \description{
+demo_meth
+}
+\details{
 Methylation data for ???
 }
 \keyword{datasets}

@@ -4,7 +4,7 @@
 \alias{mech.model}
 \title{mechmodel}
 \usage{
-mech.model(meth, mrna, cnv, DEBUG = TRUE, ...)
+mech.model(mrna, data.list, DEBUG = TRUE, ...)
 }
 \arguments{
 \item{...}{}
