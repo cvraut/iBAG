@@ -1,10 +1,14 @@
 # demo_data.R
 # this File generates the demo data
 # by default it always loads the demo data
+# TODO: run performance checks to see if we should always load the test data.
 
 #' demo_meth
 #' @details
-#' Methylation data for ???
+#' Methylation data for TCGA-BRCA, note we filter out to only 1218 genes to keep the dataset "small".
+#' rownames are the patient ids.
+#' colnames are the gene names.
+#' We also collapse the multiple probe information from TCGA using dataset.collapse.pc.singular so we only get 1 column per gene.
 #'
 #' @docType data
 #' @keywords datasets
@@ -18,7 +22,8 @@ demo_meth <-read.csv(system.file("data","meth.csv",package = "iBAG"),row.names =
 #' demo_mrna
 #' @details
 #' mRNA expression data for TCGA-BRCA, note we filter out to only 1218 genes to keep the dataset "small".
-#' The 1st column refers to the patient ids
+#' rownames are the patient ids.
+#' colnames are the gene names.
 #'
 #' @docType data
 #' @keywords datasets
@@ -32,8 +37,9 @@ demo_mrna <-read.csv(system.file("data","mrna.csv",package = "iBAG"),row.names =
 #' demo_cnv
 #' @details
 #' cnv data for TCGA-BRCA, note we filter out to only 1218 genes to keep the dataset "small"
-#' We already condense the cnv to single number summaries per gene
-#' The 1st column refers to the patient ids
+#' We already condense the cnv to single number summaries per gene from TCGA.
+#' rownames are the patient ids.
+#' colnames are the gene names.
 #'
 #' @docType data
 #' @keywords datasets
@@ -46,7 +52,7 @@ demo_cnv <-read.csv(system.file("data","cnv.csv",package = "iBAG"),row.names = 1
 
 #' demo_outcome
 #' @details
-#' EREG-mRNA stemness index outcome data for TCGA-BRCA
+#' EREG-mRNA stemness index outcome data for TCGA-BRCA.
 #'
 #' @docType data
 #' @keywords datasets

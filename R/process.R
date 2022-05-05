@@ -23,7 +23,9 @@ data.validate <- function(mrna,
                           sep="",
                           DEBUG = FALSE,
                           ...){
-  return(iBAG::data.validate.patients(mrna = mrna,outcome = outcome,data = data,DEBUG = DEBUG) & iBAG::data.validate.genes(mrna = mrna,data = data,sep=sep,DEBUG=DEBUG))
+  return(iBAG::data.validate.patients(mrna = mrna,outcome = outcome,data = data,DEBUG = DEBUG) &
+           iBAG::data.validate.genes(mrna = mrna,data = data,sep=sep,DEBUG=DEBUG) &
+           length(data) > 0)
 }
 
 

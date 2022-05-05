@@ -15,7 +15,8 @@ demo_cnv
 }
 \details{
 cnv data for TCGA-BRCA, note we filter out to only 1218 genes to keep the dataset "small"
-We already condense the cnv to single number summaries per gene
-The 1st column refers to the patient ids
+We already condense the cnv to single number summaries per gene from TCGA.
+rownames are the patient ids.
+colnames are the gene names.
 }
 \keyword{datasets}

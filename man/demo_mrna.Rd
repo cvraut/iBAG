@@ -15,6 +15,7 @@ demo_mrna
 }
 \details{
 mRNA expression data for TCGA-BRCA, note we filter out to only 1218 genes to keep the dataset "small".
-The 1st column refers to the patient ids
+rownames are the patient ids.
+colnames are the gene names.
 }
 \keyword{datasets}
