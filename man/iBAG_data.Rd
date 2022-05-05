@@ -12,7 +12,7 @@ iBAG_data$new()$get.mrna()
 
 iBAG_data$new()$get.outcome()
 
-iBAG_data$new()$get.k()
+iBAG_data$new()$get.n_data()
 
 iBAG_data$new()$get.n_patients()
 
@@ -33,7 +33,7 @@ This does not contain or manage model result data.
 \item \href{#method-get.data}{\code{iBAG_data$get.data()}}
 \item \href{#method-get.mrna}{\code{iBAG_data$get.mrna()}}
 \item \href{#method-get.outcome}{\code{iBAG_data$get.outcome()}}
-\item \href{#method-get.k}{\code{iBAG_data$get.k()}}
+\item \href{#method-get.n_data}{\code{iBAG_data$get.n_data()}}
 \item \href{#method-get.n_patients}{\code{iBAG_data$get.n_patients()}}
 \item \href{#method-get.patients}{\code{iBAG_data$get.patients()}}
 \item \href{#method-get.n_genes}{\code{iBAG_data$get.n_genes()}}
@@ -45,11 +45,12 @@ This does not contain or manage model result data.
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
+constructor
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{iBAG_data$new(
   mrna = iBAG::demo_mrna,
   outcome = iBAG::demo_outcome,
-  data = list(cnv = iBAG::demo_cnv),
+  data = list(cnv = iBAG::demo_cnv, meth = iBAG::demo_meth),
   DEBUG = FALSE,
   validate = TRUE,
   one_val_per_gene = TRUE,
@@ -72,9 +73,7 @@ This does not contain or manage model result data.
 
 \item{\code{one_val_per_gene}}{(TRUE) whether all the upstream data has 1 column per gene or not.}
 
-\item{\code{...}}{: ...
-
-get.data}
+\item{\code{...}}{: ...}
 }
 \if{html}{\out{</div>}}
 }
@@ -85,22 +84,20 @@ get.data}
 \subsection{Method \code{get.data()}}{
 get the dataset specified by user
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.data(index = 1, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.data(index = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{index}}{index of the dataset to return, can be null (sends entire list back). Ignored if a keyword is specified.}
-
-\item{\code{...}}{used to specify keyword elements in data list}
+\item{\code{index}}{(NULL): index of the dataset to return. Can either be an integer otherwise it's treated as a string. Can be null (sends entire list back).}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 dataframe of the requested dataset or list of all dataframes
 
-get.mrna
+TODO: address not found/out of bounds conditions
 }
 }
 \if{html}{\out{<hr>}}
@@ -128,16 +125,15 @@ get the outcome dataset
 
 \subsection{Returns}{
 dataframe
-get.k
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.k"></a>}}
-\if{latex}{\out{\hypertarget{method-get.k}{}}}
-\subsection{Method \code{get.k()}}{
+\if{html}{\out{<a id="method-get.n_data"></a>}}
+\if{latex}{\out{\hypertarget{method-get.n_data}{}}}
+\subsection{Method \code{get.n_data()}}{
 get the number of upstream datasets
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.k()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.n_data()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
@@ -156,7 +152,6 @@ get the number of patients in dataset
 
 \subsection{Returns}{
 numeric (integer)
-get.patients
 }
 }
 \if{html}{\out{<hr>}}
@@ -184,7 +179,6 @@ get the number of genes in dataset
 
 \subsection{Returns}{
 numeric (integer)
-get.genes
 }
 }
 \if{html}{\out{<hr>}}

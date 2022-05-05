@@ -15,8 +15,7 @@
 #' @name demo_meth
 #' @usage data(demo_meth)
 #' @format A data frame with 770 rows and 1218 variables
-#'
-#' @export
+#' @source https://portal.gdc.cancer.gov/
 demo_meth <-read.csv(system.file("data","meth.csv",package = "iBAG"),row.names = 1,header = TRUE)
 
 #' demo_mrna
@@ -30,8 +29,7 @@ demo_meth <-read.csv(system.file("data","meth.csv",package = "iBAG"),row.names =
 #' @name demo_mrna
 #' @usage data(demo_mrna)
 #' @format A data frame with 770 rows and 1218 variables
-#'
-#' @export
+#' @source https://portal.gdc.cancer.gov/
 demo_mrna <-read.csv(system.file("data","mrna.csv",package = "iBAG"),row.names = 1,header = TRUE)
 
 #' demo_cnv
@@ -46,8 +44,7 @@ demo_mrna <-read.csv(system.file("data","mrna.csv",package = "iBAG"),row.names =
 #' @name demo_cnv
 #' @usage data(demo_cnv)
 #' @format A data frame with 770 rows and 1218 variables
-#'
-#' @export
+#' @source https://portal.gdc.cancer.gov/
 demo_cnv <-read.csv(system.file("data","cnv.csv",package = "iBAG"),row.names = 1,header = TRUE)
 
 #' demo_outcome
@@ -59,6 +56,5 @@ demo_cnv <-read.csv(system.file("data","cnv.csv",package = "iBAG"),row.names = 1
 #' @name demo_outcome
 #' @usage data(demo_outcome)
 #' @format A data frame with 770 rows and 1 variables
-#'
-#' @export
+#' @source https://portal.gdc.cancer.gov/
 demo_outcome <-read.csv(system.file("data","outcome.csv",package = "iBAG"),row.names = 1,header = TRUE)
