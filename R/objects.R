@@ -164,3 +164,11 @@ iBAG_data <- R6Class("iBAG_data",
     n_data = NULL
   )
 )
+
+#' iBAG_results
+#'
+#' @name iBAG_results
+#' @description R6 class to store and manage the iBAG results.
+#' This does not contain a copy of the iBAG_data object.
+#'
+iBAG_results <- R6Class("iBAG_results",public = list(),private = list())
