@@ -8,4 +8,4 @@ jobs:
     - name: TODO to Issue
       # You may pin to the exact commit or the version.
       # uses: alstr/todo-to-issue-action@46584f64f7ddc01de0861d280fa550d5b3a29afc
-      uses: alstr/todo-to-issue-action@v4.6.3
+      uses: cvraut/todo-to-issue-action@355d6771076a6ae0f2cc489365c036356be76a7e
