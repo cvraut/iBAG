@@ -172,3 +172,5 @@ iBAG_data <- R6Class("iBAG_data",
 #' This does not contain a copy of the iBAG_data object.
 #'
 iBAG_results <- R6Class("iBAG_results",public = list(),private = list())
+
+
