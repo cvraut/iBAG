@@ -17,6 +17,6 @@ data(demo_outcome)
 demo_outcome
 }
 \details{
-EREG-mRNA stemness index outcome data for TCGA-BRCA.
+EREG-mRNA stemness index outcome data for TCGA-BRCA. Consult https://doi.org/10.1016/j.cell.2018.03.034 for more details.
 }
 \keyword{datasets}

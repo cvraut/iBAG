@@ -8,12 +8,11 @@ Description: Fits the iBAG model on a series of genomic datasets.
 Imports: 
     R6,
     stringr,
-    mgcv,
-    BASIX
+    mgcv
 License: MIT License
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Suggests: 
     testthat (>= 3.0.0)

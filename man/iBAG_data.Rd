@@ -73,7 +73,8 @@ constructor
 
 \item{\code{one_val_per_gene}}{(TRUE) whether all the upstream data has 1 column per gene or not.}
 
-\item{\code{...}}{: ...}
+\item{\code{...}}{: ...
+get.data}
 }
 \if{html}{\out{</div>}}
 }
@@ -90,7 +91,7 @@ get the dataset specified by user
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{index}}{(NULL): index of the dataset to return. Can either be an integer otherwise it's treated as a string. Can be null (sends entire list back).}
+\item{\code{index}}{(NULL): index of the dataset to return. Can either be integer or string. if null, return list.}
 }
 \if{html}{\out{</div>}}
 }
@@ -98,6 +99,7 @@ get the dataset specified by user
 dataframe of the requested dataset or list of all dataframes
 
 TODO: address not found/out of bounds conditions
+get.mrna
 }
 }
 \if{html}{\out{<hr>}}
@@ -125,6 +127,7 @@ get the outcome dataset
 
 \subsection{Returns}{
 dataframe
+get.n_data
 }
 }
 \if{html}{\out{<hr>}}
@@ -179,6 +182,7 @@ get the number of genes in dataset
 
 \subsection{Returns}{
 numeric (integer)
+get.genes
 }
 }
 \if{html}{\out{<hr>}}
