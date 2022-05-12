@@ -11,15 +11,13 @@ library(mgcv)
 #' @param ...
 #'
 #' @export
-mech.model <- function(mrna,data.list,DEBUG=TRUE,...){
-  genes <- colnames(mrna)
-  n <- dim(mrna)[1]
+mech.model.single_gene_val <- function(mrna, data.list, DEBUG=TRUE, ...){
+  genes <- colnames(mrna) 
+  n <- nrow(mrna)
   p <- length(genes)
-  k = length(data.list) + 1
+  k <- length(data.list) + 1
 
-  PC_VAR_THRESH = 0.09
-
-  X <- matrix(NA,nrow=n,ncol=p*k)
+  X <- matrix(NA, nrow=n, ncol=p*k)
   row.names(X) <- rownames(mrna)
   colnames(X) <- paste(rep(sapply(1:k,FUN = function(i){sprintf(ifelse(i<k,"data_%d","other"),i)}),each=p),rep(genes,k),sep="_")
   SS <- matrix(NA,nrow=p,ncol = k+1)
