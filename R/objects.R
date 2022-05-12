@@ -18,17 +18,22 @@ iBAG_data <- R6Class("iBAG_data",
     #'
     #' @param mrna (iBAG::demo_mrna) dataframe of mrna data
     #' @param outcome (iBAG::demo_outcome) dataframe of outcome data
-    #' @param data (list(cnv = iBAG::demo_cnv)) list of upstream data
+    #' @param data (list(cnv = iBAG::demo_cnv, meth = iBAG::demo_meth)) list of upstream data
     #' @param DEBUG (FALSE) initialize object in DEBUG mode
     #' @param validate (TRUE) to validate the data supplied. Will raise Error if data is not valid.
     #' @param one_val_per_gene (TRUE) whether all the upstream data has 1 column per gene or not.
+    #' @param data.name.sep ("_") the default character seperator for collisions in names
+    #' @param default.data.name ("data") the default upstream dataset name. Only applied in get.data.names
     #' @param ... : ...
     initialize = function(mrna = iBAG::demo_mrna,
                           outcome = iBAG::demo_outcome,
                           data = list(cnv=iBAG::demo_cnv, meth=iBAG::demo_meth),
                           DEBUG = FALSE,
                           validate = TRUE,
-                          one_val_per_gene = TRUE, ...){
+                          one_val_per_gene = TRUE,
+                          data.name.sep = "_",
+                          default.data.name = "data",
+                          ...){
       private$DEBUG <- DEBUG
       private$one_val_per_gene <- one_val_per_gene
       kwargs <- list(...)
@@ -47,6 +52,8 @@ iBAG_data <- R6Class("iBAG_data",
       private$mrna <- mrna
       private$outcome <- outcome
       private$data <- data
+      private$sep <- data.name.sep
+      private$default.data.name <- default.data.name
 
       # set inferred data
       private$genes <- colnames(mrna)
@@ -57,7 +64,7 @@ iBAG_data <- R6Class("iBAG_data",
       private$n_data <- length(private$data_names)
     },
     #' get.data
-    #' 
+    #'
     #' @description get the dataset specified by user
     #' @usage iBAG_data$new()$get.data()
     #'
@@ -80,7 +87,7 @@ iBAG_data <- R6Class("iBAG_data",
       }
     },
     #' get.mrna
-    #' 
+    #'
     #' @description get the mrna dataset
     #' @usage iBAG_data$new()$get.mrna()
     #'
@@ -104,7 +111,7 @@ iBAG_data <- R6Class("iBAG_data",
       return(private$outcome)
     },
     #' get.n_data
-    #' 
+    #'
     #' @description get the number of upstream datasets
     #' @usage iBAG_data$new()$get.n_data()
     #'
@@ -138,13 +145,32 @@ iBAG_data <- R6Class("iBAG_data",
       return(dim(private$mrna)[2])
     },
     #' get.genes
-    #' 
+    #'
     #' @description get a vector of genes in dataset
     #' @usage iBAG_data$new()$get.genes()
     #'
     #' @return vector of numeric or strings
     get.genes = function(){
       return(colnames(private$mrna))
+    },
+    #' get.data_names
+    #'
+    #' @description gets a list of datanames from data. Does some error handling.
+    #' @usage iBAG_data$new()$get.data_names()
+    #'
+    #' @return vector of string refering to names
+    get.data_names = function(){
+      if(private$DEBUG){
+        print(private$n_data)
+        print(names(private$data))
+        print(private$sep)
+        print(private$default.data.name)
+      }
+      return(get.data.names(data.size = private$n_data,
+                            data.names = names(private$data),
+                            sep=private$sep,
+                            default.data.name=private$default.data.name,
+                            DEBUG=private$DEBUG))
     }
   ),
   private = list(
@@ -170,7 +196,11 @@ iBAG_data <- R6Class("iBAG_data",
     # @field n_patients number of patients (length(patients))
     n_patients = NULL,
     # @field n_data number of data (length(data_names))
-    n_data = NULL
+    n_data = NULL,
+    # @field sep
+    sep = NULL,
+    # @field data.default
+    default.data.name = NULL
   )
 )
 
@@ -227,11 +257,11 @@ iBAG_results <- R6Class("iBAG_results",
                           ...){
       private$DEBUG <- DEBUG
       private$validate <- validate
-      
+
       private$n_data <- length(SS) - 2
       private$n_patients <- nrow(X)
       private$n_genes <- ncol(X)%/%private$n_data
-      
+
       if(is.null(X) || is.null(Y) || is.null(SS)){
         warning("X, Y, or SS was missing. Setting validate to FALSE")
         validate <- FALSE
@@ -258,27 +288,27 @@ iBAG_results <- R6Class("iBAG_results",
       private$validate <- validate
     },
     #' get.X
-    #' 
+    #'
     #' @description returns X matrix
-    #' 
+    #'
     #' @return matrix that should be n_patients rows and n_genes*n_data columns
     get.X = function(){
       return(private$X)
     },
     #' get.Y
-    #' 
+    #'
     #' @description returns Y vector
-    #' 
+    #'
     #' @return vector that is n_patients long
     get.Y = function(){
       return(private$Y)
     },
     #' get.SS
-    #' 
+    #'
     #' @description returns the Sum of Squares mech model results, either all or some of them
-    #' 
+    #'
     #' @param index (NULL) can be NULL, integer, or string. If NULL returns list, otherwise returns the vector at index
-    #' @return a vector or a list of vectors 
+    #' @return a vector or a list of vectors
     get.SS = function(index = NULL){
       if(is.null(index)){
         return(private$SS)
@@ -290,41 +320,41 @@ iBAG_results <- R6Class("iBAG_results",
       }
     },
     #' get.beta_mean
-    #' 
+    #'
     #' @description returns the vector of posterior beta means
-    #' 
+    #'
     #' @return a vector of posterior beta means
     get.beta_mean = function(){
       return(private$beta_mean)
     },
     #' get.beta_incl_prob
-    #' 
+    #'
     #' @description returns a vector of posterior beta inclusion probabilities
-    #' 
+    #'
     #' @return a vector of posterior beta inclusion probabilities
     get.beta_incl_prob = function(){
       return(private$beta_incl_prob)
     },
     #' get.n_patients
-    #' 
+    #'
     #' @description returns the number of patients
-    #' 
+    #'
     #' @return integer of number of patients
     get.n_patients = function(){
       return(private$n_patients)
     },
     #' get.genes
-    #' 
+    #'
     #' @description returns the number of genes
-    #' 
+    #'
     #' @return integer of number of genes
     get.n_genes = function(){
       return(private$n_genes)
     },
     #' get.n_data
-    #' 
+    #'
     #' @description returns the number of upstream datasets
-    #' 
+    #'
     #' @return integer of number of upstream datasets
     get.n_data = function(){
       return(private$n_data)

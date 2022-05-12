@@ -202,3 +202,45 @@ dataset.collapse.pc.singular <- function(mrna,
   colnames(data.collapsed) <- colnames(mrna)
   return(data.collapsed)
 }
+
+#' get.data.names
+#' @description get a vector of usable names for the list of datasets.
+get.data.names <- function(data.size,
+                           data.names,
+                           sep="_",
+                           default.data.name="data",
+                           DEBUG = FALSE){
+  if(DEBUG){
+    print("in get.data.names")
+    print(data.names)
+  }
+  if(is.null(data.names)){
+    data.names <- rep(default.data.name, data.size)
+  }
+  data.names <- unname(sapply(data.names, FUN = function(name){ifelse(name == "",default.data.name,paste(name))}))
+  if(DEBUG){
+    print(data.names)
+  }
+  name.counter <- list()
+  for(i in 1:data.size){
+    if(DEBUG){
+      print("looping over data.names")
+      print(data.names)
+      print(i)
+      print(name.counter)
+    }
+    if(sum(data.names[i] == data.names) > 1 || exists(data.names[i],name.counter)){
+      if(exists(data.names[i],name.counter)){
+        name.counter[data.names[i]] <- as.integer(name.counter[data.names[i]]) + 1
+      } else {
+        name.counter[data.names[i]] <- 1
+      }
+      new.name <- sprintf("%s%s%d",data.names[i],sep,as.integer(name.counter[data.names[i]]))
+      if(new.name %in% data.names[-1*i]){
+        stop(paste("collision on data renaming '", new.name, "' Check sep.", sep="", collapse = ""))
+      }
+      data.names[i] <- new.name
+    }
+  }
+  return(data.names)
+}

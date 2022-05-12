@@ -86,3 +86,16 @@ testthat::test_that("Verify the demo data is valid",{
   testthat::expect_true(data.validate(mrna=demo_mrna,outcome = demo_outcome,data=list(meth=demo_meth,cnv=demo_cnv),sep=NULL),
                         label = "demo dataset should pass :|")
 })
+
+testthat::test_that("test get.data.names", {
+  # data.size,data.names,sep,default.data.name
+  testthat::expect_identical(get.data.names(4,NULL), c("data_1","data_2","data_3","data_4"),
+                             "testing if data.list has no names")
+  testthat::expect_identical(get.data.names(2,names(iBAG::iBAG_data$new()$get.data())), c("cnv","meth"),
+                             "testing the demo data")
+  testthat::expect_identical(get.data.names(7,c("my.data","my.data","","","meth","meth","cnv"),sep=""),
+                             c("my.data1","my.data2","data1","data2","meth1","meth2","cnv"),
+                             "testing a far more complicated example")
+  testthat::expect_error(get.data.names(3,c("data","data1","data"),sep=""),
+                         "collision on data renaming 'data1' Check sep.")
+})
