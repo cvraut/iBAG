@@ -1,7 +1,7 @@
-# iBAG
+# iBAG: integrative Bayesian Analysis of the Genome
 An R package for the iBAG library
 
-## iBAG: integrative Bayesian Analysis of the Genome
+## About iBAG
 
 The iBAG framework allows us to study the genomic effects from multiple types of genomic data in a hierarchical fashion.
 
@@ -11,14 +11,10 @@ The iBAG framework allows us to study the genomic effects from multiple types of
 ```R
 demo_data <- iBAG::demo_data()
 iBAG_result <- iBAG::fit(demo_data)
-summary(iBAG_result)
-```
-```
->
 ```
 ```R
+summary(iBAG_result)
+>
 summary(iBAG_result$mechmodel)
-```
-```
 >
 ```
