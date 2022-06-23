@@ -24,7 +24,7 @@ empty.X.constructor <- function(patients,
   }
 
   X.namer <- function(i){
-    return(sprintf(ifelse(i<=k,data.names[i],other.name),i))
+    return(ifelse(i<=k,data.names[i],other.name))
   }
   colnames(X) <- paste(rep(sapply(1:(k+1),FUN = X.namer),each=p),rep(genes,k),sep="_")
   return(X)
@@ -40,7 +40,7 @@ empty.X.constructor <- function(patients,
 #' @param other.name ("other"): the string to use to label residuals from mechmodel
 #' @param default.data.name ("data"): the string to use to label unnamed datasets from data.list
 #' @param DEBUG (FALSE): debug flag
-#' @param ...
+#' @param ... extra arguments for the iBAG model
 #' @export
 mech.model <- function(mrna,
                        data.list,

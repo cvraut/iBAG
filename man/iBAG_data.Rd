@@ -21,6 +21,8 @@ iBAG_data$new()$get.patients()
 iBAG_data$new()$get.n_genes()
 
 iBAG_data$new()$get.genes()
+
+iBAG_data$new()$get.data_names()
 }
 \description{
 R6 class to store and manage the iBAG data.
@@ -38,6 +40,7 @@ This does not contain or manage model result data.
 \item \href{#method-get.patients}{\code{iBAG_data$get.patients()}}
 \item \href{#method-get.n_genes}{\code{iBAG_data$get.n_genes()}}
 \item \href{#method-get.genes}{\code{iBAG_data$get.genes()}}
+\item \href{#method-get.data_names}{\code{iBAG_data$get.data_names()}}
 \item \href{#method-clone}{\code{iBAG_data$clone()}}
 }
 }
@@ -54,6 +57,8 @@ constructor
   DEBUG = FALSE,
   validate = TRUE,
   one_val_per_gene = TRUE,
+  data.name.sep = "_",
+  default.data.name = "data",
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -65,13 +70,17 @@ constructor
 
 \item{\code{outcome}}{(iBAG::demo_outcome) dataframe of outcome data}
 
-\item{\code{data}}{(list(cnv = iBAG::demo_cnv)) list of upstream data}
+\item{\code{data}}{(list(cnv = iBAG::demo_cnv, meth = iBAG::demo_meth)) list of upstream data}
 
 \item{\code{DEBUG}}{(FALSE) initialize object in DEBUG mode}
 
 \item{\code{validate}}{(TRUE) to validate the data supplied. Will raise Error if data is not valid.}
 
 \item{\code{one_val_per_gene}}{(TRUE) whether all the upstream data has 1 column per gene or not.}
+
+\item{\code{data.name.sep}}{("_") the default character seperator for collisions in names}
+
+\item{\code{default.data.name}}{("data") the default upstream dataset name. Only applied in get.data.names}
 
 \item{\code{...}}{: ...
 get.data}
@@ -196,6 +205,20 @@ get a vector of genes in dataset
 
 \subsection{Returns}{
 vector of numeric or strings
+get.data_names
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.data_names"></a>}}
+\if{latex}{\out{\hypertarget{method-get.data_names}{}}}
+\subsection{Method \code{get.data_names()}}{
+gets a list of datanames from data. Does some error handling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.data_names()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+vector of string refering to names
 }
 }
 \if{html}{\out{<hr>}}

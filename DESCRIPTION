@@ -8,7 +8,13 @@ Description: Fits the iBAG model on a series of genomic datasets.
 Imports: 
     R6,
     stringr,
-    mgcv
+    mgcv,
+    Rcpp,
+    stats,
+    matrixStats
+LinkingTo: Rcpp,
+    RcppArmadillo,
+    BH
 License: MIT License
 Encoding: UTF-8
 LazyData: true
