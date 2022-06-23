@@ -59,7 +59,7 @@ testthat::test_that("Check data.validate.genes",{
   genes.list <- c(1:5)
   probes.list <- c(1:5)
   sep = "_"
-  data.genes.list <- unlist(sapply(genes.list,FUN=function(gene){return(sapply(sample(probes.list,sample(1:length(probes.list),1),replace = F),FUN = function(probe){paste(gene,sep,probe,sep = "")}))}))
+  data.genes.list <- unlist(sapply(genes.list,FUN=function(gene){return(sapply(sample(probes.list,sample(seq_len(length(probes.list)),1),replace = F),FUN = function(probe){paste(gene,sep,probe,sep = "")}))}))
 
   data1 <- matrix(NA,nrow=2,ncol=5)
   colnames(data1) <- genes.list

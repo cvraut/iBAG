@@ -95,8 +95,8 @@ mech.model <- function(mrna,
     if(DEBUG){
       cat(sprintf("Gene: %d\nFormula: %s\n",gene_i,formula_all))
     }
-    gam.mrna  <- gam(as.formula(formula_all))
-    fit_scores <- as.matrix(predict.gam(gam.mrna,type="terms"))
+    gam.mrna  <- mgcv::gam(as.formula(formula_all))
+    fit_scores <- as.matrix(mgcv::predict.gam(gam.mrna,type="terms"))
     if(DEBUG){
       cat("gam_fit done!")
     }

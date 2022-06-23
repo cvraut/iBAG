@@ -1,3 +1,5 @@
+# This file contains roxygen2 documentation for the pkg. Used primarily for NAMESPACE construction
+
 #' iBAG: A package for fitting the iBAG model.
 #'
 #' Get started with iBAG in 2 lines:
