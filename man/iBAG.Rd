@@ -4,12 +4,30 @@
 \name{iBAG}
 \alias{iBAG}
 \title{iBAG: A package for fitting the iBAG model.}
+\usage{
+data <- iBAG::demo_data()
+result <- iBAG::iBAG(data)
+summary(result)
+}
+\arguments{
+\item{...}{additional kwargs}
+}
+\value{
+iBAG object -> main components are iBAG_object$mechmodel and iBAG_object$clinmodel
+}
 \description{
 Get started with iBAG in 2 lines:
 demo_data <- iBAG::demo_data()
-iBAG_result <- iBAG::fit(demo_data)
+iBAG_result <- iBAG::iBAG(demo_data)
 summary(iBAG_result)
 summary(iBAG_result$mechmodel)
+
+fits the iBAG model
+}
+\details{
+follows details from ____
+
+consult \link{supplementary} for an extended explanation & example
 }
 \section{iBAG functions}{
 
