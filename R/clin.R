@@ -43,14 +43,17 @@ clin.model <- function(X,
                        priors = iBAG::construct.priors(),
                        DEBUG = FALSE,
                        ...){
-  return(iBAG::graper(X = X, 
-                      y = Y, 
-                      annot = rep(1,ncol(X), 
-                      d_tau = priors$d_tau,
-                      r_tau = priors$r_tau,
-                      d_pi = priors$d_pi,
-                      r_pi = priors$r_pi,
-                      r_gamma = priors$r_gamma,
-                      d_gamma = priors$d_gamma,
-                      ...)))
+  graper.args <- c(list(X = X, y = Y, annot = rep(1, ncol(X))), priors, list(...))
+
+  # return(iBAG::graper(X = X, 
+  #                     y = Y, 
+  #                     annot = rep(1,ncol(X)), 
+  #                     d_tau = priors$d_tau,
+  #                     r_tau = priors$r_tau,
+  #                     d_pi = priors$d_pi,
+  #                     r_pi = priors$r_pi,
+  #                     r_gamma = priors$r_gamma,
+  #                     d_gamma = priors$d_gamma,
+  #                     ...)))
+  return(do.call(iBAG::graper,graper.args))
 }
