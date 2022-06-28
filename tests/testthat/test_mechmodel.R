@@ -11,7 +11,7 @@ testthat::test_that("test empty.X.constructor", {
                                   genes = demo_data$get.genes(),
                                   k = demo_data$get.n_data(),
                                   data.names = demo_data$get.data_names())
-  expected.X <- matrix(NA,nrow = 770,ncol = 3*1218)
+  expected.X <- matrix(NA,nrow = 770,ncol = 3*1215)
   row.names(expected.X) <- demo_data$get.patients()
   genes <- demo_data$get.genes()
   colnames(expected.X) <- as.vector(unname(sapply(c("cnv","meth","other"), function(platform){paste(platform,genes,sep = "_")})))
