@@ -118,7 +118,7 @@ graper <- function(X, y, annot, factoriseQ = TRUE, spikeslab = TRUE,
     intercept = TRUE, family = "gaussian", standardize = TRUE, n_rep = 1,
     max_iter = 3000, th = 0.01, d_tau = 0.001, r_tau = 0.001,
     d_gamma = 0.001, r_gamma = 0.001, r_pi = 1, d_pi = 1, calcELB = TRUE,
-    verbose = TRUE, freqELB = 1, nogamma = FALSE, init_psi = 1) {
+    verbose = FALSE, freqELB = 1, nogamma = FALSE, init_psi = 1) {
 
   stopifnot(ncol(X) == length(annot)) # check correct dimensions of input
   if(!spikeslab & !nogamma) nogamma <- FALSE # nogamma only with spikeslab
