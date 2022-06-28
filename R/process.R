@@ -23,9 +23,10 @@ data.validate <- function(mrna,
                           sep="",
                           DEBUG = FALSE,
                           ...){
-  return(iBAG::data.validate.patients(mrna = mrna,outcome = outcome,data = data,DEBUG = DEBUG) &
-           iBAG::data.validate.genes(mrna = mrna,data = data,sep=sep,DEBUG=DEBUG) &
-           length(data) > 0)
+  return(iBAG::data.validate.patients(mrna = mrna,outcome = outcome,data = data,DEBUG = DEBUG) &&
+         iBAG::data.validate.genes(mrna = mrna,data = data,sep=sep,DEBUG=DEBUG) &&
+         iBAG::data.validate.columns(mrna = mrna,data = data,DEBUG=DEBUG) &&
+         length(data) > 0)
 }
 
 
@@ -149,6 +150,48 @@ data.validate.genes <- function(mrna,
     }
     return(all(sapply(data,FUN = function(dataset){return(check_dataset(dataset))})))
   }
+}
+
+
+#' data.validate.columns
+#' @name data.validate.columns
+#' @description Validates the columns of mrna and upstream data to ensure all columns have sd > 0.
+#' @details
+#' This function checks:
+#'   - all columns in each dataset contain some variation
+#'   - returns false if it encounters a column in any dataset without variation
+#'     - otherwise returns true
+#' 
+#' @usage data.validate.columns(mrna,data)
+#'
+#' @param mrna :mrna data (follow convention of demo_mrna)
+#' @param data :list of other dataframes (follow demo conventions)
+#' @param DEBUG FALSE: flag to print debug statements
+#' @return boolean: whether this set of iBAG data is valid for the columns only
+#'
+#'
+#' @export
+data.validate.columns <- function(mrna,
+                                  data,
+                                  DEBUG = FALSE,
+                                  ...){
+  check_dataset <- function(data){
+    col_sds <- apply(data,2,sd)
+    return(all(is.na(col_sds) == FALSE) && all(col_sds != 0))
+  }
+  if(!check_dataset(mrna)){
+    if(DEBUG){
+      print("mrna has a column with 0 sd")
+    }
+    return(FALSE)
+  }
+  if(any(sapply(data,FUN=check_dataset) == FALSE)){
+    if(DEBUG){
+      print("upstream data has a column with 0 sd")
+    }
+    return(FALSE)
+  }
+  return(TRUE)
 }
 
 #' dataset.collapse.pc.singular

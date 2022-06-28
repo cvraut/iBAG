@@ -99,3 +99,22 @@ testthat::test_that("test get.data.names", {
   testthat::expect_error(get.data.names(3,c("data","data1","data"),sep=""),
                          "collision on data renaming 'data1' Check sep.")
 })
+
+testthat::test_that("test data.validate.columns", {
+  # good data
+  data1 <- matrix(seq(1,10),nrow = 2, ncol = 5)
+  data2 <- matrix(seq(1,8),nrow = 8,ncol = 1)
+  # bad data
+  data3 <- matrix(c(1,2,3,3),nrow = 2, ncol = 2)
+  data4 <- matrix(c(1,1,3,4),nrow = 2, ncol = 2)
+  data5 <- matrix(c(1,2),nrow=1,ncol=2)
+
+  testthat::expect_true(iBAG::data.validate.columns(data1,list(cnv=data2)),
+    label = "no problems")
+  testthat::expect_false(iBAG::data.validate.columns(data1,list(cnv=data2,meth=data3)),
+    label = "problem is in data[[2]]")
+  testthat::expect_false(iBAG::data.validate.columns(data1,list(cnv=data4,meth=data2)),
+    label = "problem is in data[[1]]")
+  testthat::expect_false(iBAG::data.validate.columns(data5,list(cnv=data2,meth=data2)),
+    label = "problem in mrna")
+})
