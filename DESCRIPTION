@@ -1,26 +1,24 @@
-Package: iBAGpkg
+Package: iBAG
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Title: integrative Bayesian Analysis of the Genome
+Version: 1.0
+Author: Chinmay Raut
+Maintainer: <chinmay0raut@gmail.com>
+Description: Fits the iBAG model on a series of genomic datasets.
 Imports: 
-    EMVS,
-    glmnet,
-    HyperbolicDist,
-    MASS,
-    MCMCpack,
-    mgcv,
     R6,
     stringr,
-    tidyverse,
-    graper
-License: What license is it under?
+    mgcv,
+    Rcpp,
+    stats,
+    matrixStats
+LinkingTo: Rcpp,
+    RcppArmadillo,
+    BH
+License: MIT License
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Suggests: 
     testthat (>= 3.0.0)

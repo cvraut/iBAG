@@ -3,14 +3,23 @@
 \docType{data}
 \name{demo_meth}
 \alias{demo_meth}
-\title{Methylation data for ???}
+\title{demo_meth}
 \format{
-A data frame with ??? rows and ??? variables
+A data frame with 770 rows and 1218 variables
+}
+\source{
+https://portal.gdc.cancer.gov/
 }
 \usage{
 data(demo_meth)
 }
 \description{
-Methylation data for ???
+demo_meth
+}
+\details{
+Methylation data for TCGA-BRCA, note we filter out to only 1218 genes to keep the dataset "small".
+rownames are the patient ids.
+colnames are the gene names.
+We also collapse the multiple probe information from TCGA using dataset.collapse.pc.singular so we only get 1 column per gene.
 }
 \keyword{datasets}

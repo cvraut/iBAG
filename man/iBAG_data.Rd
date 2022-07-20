@@ -3,15 +3,44 @@
 \name{iBAG_data}
 \alias{iBAG_data}
 \title{iBAG_data}
-\description{
-iBAG_data
+\usage{
+iBAG_data$new()
 
-iBAG_data
+iBAG_data$new()$get.data()
+
+iBAG_data$new()$get.mrna()
+
+iBAG_data$new()$get.outcome()
+
+iBAG_data$new()$get.n_data()
+
+iBAG_data$new()$get.n_patients()
+
+iBAG_data$new()$get.patients()
+
+iBAG_data$new()$get.n_genes()
+
+iBAG_data$new()$get.genes()
+
+iBAG_data$new()$get.data_names()
+}
+\description{
+R6 class to store and manage the iBAG data.
+This does not contain or manage model result data.
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{iBAG_data$new()}}
+\item \href{#method-get.data}{\code{iBAG_data$get.data()}}
+\item \href{#method-get.mrna}{\code{iBAG_data$get.mrna()}}
+\item \href{#method-get.outcome}{\code{iBAG_data$get.outcome()}}
+\item \href{#method-get.n_data}{\code{iBAG_data$get.n_data()}}
+\item \href{#method-get.n_patients}{\code{iBAG_data$get.n_patients()}}
+\item \href{#method-get.patients}{\code{iBAG_data$get.patients()}}
+\item \href{#method-get.n_genes}{\code{iBAG_data$get.n_genes()}}
+\item \href{#method-get.genes}{\code{iBAG_data$get.genes()}}
+\item \href{#method-get.data_names}{\code{iBAG_data$get.data_names()}}
 \item \href{#method-clone}{\code{iBAG_data$clone()}}
 }
 }
@@ -19,20 +48,177 @@ iBAG_data
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
+constructor
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$new(DEBUG = FALSE, print_status = FALSE, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$new(
+  mrna = iBAG::demo_mrna,
+  outcome = iBAG::demo_outcome,
+  data = list(cnv = iBAG::demo_cnv, meth = iBAG::demo_meth),
+  DEBUG = FALSE,
+  validate = TRUE,
+  one_val_per_gene = TRUE,
+  data.name.sep = "_",
+  default.data.name = "data",
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{DEBUG}}{boolean: initialize object in DEBUG mode}
+\item{\code{mrna}}{(iBAG::demo_mrna) dataframe of mrna data}
 
-\item{\code{print_status}}{boolean: initialize object to print (to stdout) everything that it does}
+\item{\code{outcome}}{(iBAG::demo_outcome) dataframe of outcome data}
 
-\item{\code{...}}{: ...}
+\item{\code{data}}{(list(cnv = iBAG::demo_cnv, meth = iBAG::demo_meth)) list of upstream data}
+
+\item{\code{DEBUG}}{(FALSE) initialize object in DEBUG mode}
+
+\item{\code{validate}}{(TRUE) to validate the data supplied. Will raise Error if data is not valid.}
+
+\item{\code{one_val_per_gene}}{(TRUE) whether all the upstream data has 1 column per gene or not.}
+
+\item{\code{data.name.sep}}{("_") the default character seperator for collisions in names}
+
+\item{\code{default.data.name}}{("data") the default upstream dataset name. Only applied in get.data.names}
+
+\item{\code{...}}{: ...
+get.data}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.data"></a>}}
+\if{latex}{\out{\hypertarget{method-get.data}{}}}
+\subsection{Method \code{get.data()}}{
+get the dataset specified by user
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.data(index = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{index}}{(NULL): index of the dataset to return. Can either be integer or string. if null, return list.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+dataframe of the requested dataset or list of all dataframes
+
+TODO: address not found/out of bounds conditions
+get.mrna
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.mrna"></a>}}
+\if{latex}{\out{\hypertarget{method-get.mrna}{}}}
+\subsection{Method \code{get.mrna()}}{
+get the mrna dataset
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.mrna()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+dataframe
+get.outcome
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.outcome"></a>}}
+\if{latex}{\out{\hypertarget{method-get.outcome}{}}}
+\subsection{Method \code{get.outcome()}}{
+get the outcome dataset
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.outcome()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+dataframe
+get.n_data
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.n_data"></a>}}
+\if{latex}{\out{\hypertarget{method-get.n_data}{}}}
+\subsection{Method \code{get.n_data()}}{
+get the number of upstream datasets
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.n_data()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+numeric (integer)
+get.n_patients
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.n_patients"></a>}}
+\if{latex}{\out{\hypertarget{method-get.n_patients}{}}}
+\subsection{Method \code{get.n_patients()}}{
+get the number of patients in dataset
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.n_patients()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+numeric (integer)
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.patients"></a>}}
+\if{latex}{\out{\hypertarget{method-get.patients}{}}}
+\subsection{Method \code{get.patients()}}{
+get a vector of patients in dataset
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.patients()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+vector of numeric or strings
+get.n_genes
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.n_genes"></a>}}
+\if{latex}{\out{\hypertarget{method-get.n_genes}{}}}
+\subsection{Method \code{get.n_genes()}}{
+get the number of genes in dataset
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.n_genes()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+numeric (integer)
+get.genes
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.genes"></a>}}
+\if{latex}{\out{\hypertarget{method-get.genes}{}}}
+\subsection{Method \code{get.genes()}}{
+get a vector of genes in dataset
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.genes()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+vector of numeric or strings
+get.data_names
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.data_names"></a>}}
+\if{latex}{\out{\hypertarget{method-get.data_names}{}}}
+\subsection{Method \code{get.data_names()}}{
+gets a list of datanames from data. Does some error handling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{iBAG_data$get.data_names()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+vector of string refering to names
 }
 }
 \if{html}{\out{<hr>}}

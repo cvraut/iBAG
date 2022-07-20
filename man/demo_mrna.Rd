@@ -3,14 +3,22 @@
 \docType{data}
 \name{demo_mrna}
 \alias{demo_mrna}
-\title{mRNA expression data for ???}
+\title{demo_mrna}
 \format{
-A data frame with ??? rows and ??? variables
+A data frame with 770 rows and 1218 variables
+}
+\source{
+https://portal.gdc.cancer.gov/
 }
 \usage{
 data(demo_mrna)
 }
 \description{
-mRNA expression data for ???
+demo_mrna
+}
+\details{
+mRNA expression data for TCGA-BRCA, note we filter out to only 1218 genes to keep the dataset "small".
+rownames are the patient ids.
+colnames are the gene names.
 }
 \keyword{datasets}

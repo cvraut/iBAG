@@ -5,11 +5,5 @@
 #'  \describe {
 #'    \item{R6}
 #'    \item{stringr}
-#'    \item{tidyverse}
 #'    \item{mgcv}
-#'    \item{glmnet}
-#'    \item{MASS}
-#'    \item{MCMCpack}
-#'    \item{HyperbolicDist}
-#'    \item{graper}
 #'  }
